@@ -1,0 +1,572 @@
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable.css');
+
+/* ===================================================
+   ROOT
+=================================================== */
+
+:root {
+  --bg: #fffdf5;
+  --surface: #ffffff;
+  --text: #364c84;
+  --muted: #6e86c4;
+
+  --folder-main: #8ec9f5;
+  --folder-light: #b7ddfb;
+  --folder-dark: #74b8ef;
+
+  --border: rgba(54, 76, 132, 0.12);
+
+  --shadow-sm: 0 4px 12px rgba(0,0,0,.06);
+  --shadow-md: 0 12px 30px rgba(0,0,0,.08);
+  --shadow-lg: 0 18px 40px rgba(0,0,0,.12);
+}
+
+body.dark {
+  --bg: #121a2e;
+  --surface: #1b2744;
+  --text: #fffdf5;
+  --muted: #9db5ef;
+
+  --folder-main: #5d9fe0;
+  --folder-light: #7cb7ef;
+  --folder-dark: #4d8ccd;
+
+  --border: rgba(255,255,255,.12);
+}
+
+/* ===================================================
+   RESET
+=================================================== */
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  font-family:"Pretendard Variable",sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  transition:.3s;
+}
+
+a{
+  color:inherit;
+  text-decoration:none;
+}
+
+.app-container{
+  min-height:100vh;
+}
+
+.main-content{
+  min-height:100vh;
+}
+
+/* ===================================================
+   COVER
+=================================================== */
+
+.cover-container{
+  height:100vh;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  position:relative;
+}
+
+.cover-theme-toggle{
+  position:absolute;
+  top:24px;
+  right:24px;
+}
+
+.cover-content{
+  text-align:center;
+}
+
+.cover-label{
+  font-size:.85rem;
+  letter-spacing:.25em;
+  text-transform:uppercase;
+  color:var(--muted);
+
+  margin-bottom:20px;
+}
+
+.cover-title{
+  font-size:clamp(4rem,14vw,10rem);
+  font-weight:900;
+  letter-spacing:-0.05em;
+  line-height:.9;
+}
+
+.cover-subtitle{
+  margin-top:24px;
+
+  font-size:1rem;
+  color:var(--muted);
+
+  max-width:500px;
+}
+
+/* ===================================================
+   TOGGLE
+=================================================== */
+
+.theme-toggle-btn{
+  border:1px solid var(--border);
+  background:var(--surface);
+
+  padding:.7rem 1rem;
+
+  border-radius:12px;
+
+  cursor:pointer;
+
+  color:var(--text);
+
+  font-weight:700;
+
+  box-shadow:var(--shadow-sm);
+}
+
+/* ===================================================
+   HOME
+=================================================== */
+
+.home-page-container{
+  position:relative;
+}
+
+.sticky-cover-wrapper{
+  position:sticky;
+  top:0;
+  height:100vh;
+  z-index:1;
+}
+
+.shelf-section-wrapper{
+  position:relative;
+  z-index:2;
+
+  background:var(--bg);
+
+  padding:80px 24px;
+
+  border-top:1px solid var(--border);
+}
+
+.shelf-header{
+  text-align:center;
+
+  margin-bottom:50px;
+}
+
+.shelf-subtitle{
+  color:var(--muted);
+
+  text-transform:uppercase;
+
+  font-size:.8rem;
+
+  letter-spacing:.2em;
+}
+
+.shelf-title{
+  margin-top:10px;
+
+  font-size:2.5rem;
+  font-weight:900;
+}
+
+/* ===================================================
+   FOLDER GRID
+=================================================== */
+
+.folder-grid{
+  max-width:1100px;
+
+  margin:0 auto;
+
+  display:grid;
+
+  grid-template-columns:
+  repeat(auto-fit,minmax(280px,1fr));
+
+  gap:32px;
+}
+
+/* ===================================================
+   APPLE FOLDER
+=================================================== */
+
+.folder-container{
+  cursor:pointer;
+  transition:.25s;
+}
+
+.folder-container:hover{
+  transform:translateY(-8px);
+}
+
+.folder-tab{
+  width:160px;
+  height:48px;
+
+  margin-left:28px;
+
+  border-radius:20px 20px 0 0;
+
+  background:var(--folder-dark);
+}
+
+.folder-body{
+  position:relative;
+
+  height:250px;
+
+  margin-top:-2px;
+
+  border-radius:24px;
+
+  background:
+  linear-gradient(
+    180deg,
+    var(--folder-light),
+    var(--folder-main)
+  );
+
+  overflow:hidden;
+
+  box-shadow:var(--shadow-md);
+}
+
+.folder-body::before{
+  content:"";
+
+  position:absolute;
+
+  left:0;
+  right:0;
+  top:0;
+
+  height:90px;
+
+  background:
+  linear-gradient(
+    rgba(255,255,255,.25),
+    transparent
+  );
+}
+
+.folder-emoji{
+  position:absolute;
+
+  top:44%;
+  left:50%;
+
+  transform:translate(-50%,-50%);
+
+  font-size:4rem;
+}
+
+.folder-name{
+  position:absolute;
+
+  left:28px;
+  bottom:52px;
+
+  font-size:1.4rem;
+  font-weight:700;
+
+  color:#31528d;
+}
+
+.folder-count{
+  position:absolute;
+
+  left:28px;
+  bottom:28px;
+
+  font-size:.85rem;
+
+  color:#31528d;
+
+  opacity:.8;
+}
+
+/* ===================================================
+   CATEGORY
+=================================================== */
+
+.category-page{
+  max-width:900px;
+
+  margin:0 auto;
+
+  padding:80px 24px;
+}
+
+.category-header{
+  margin-bottom:50px;
+}
+
+.category-tag-badge{
+  display:inline-block;
+
+  padding:.5rem 1rem;
+
+  border-radius:999px;
+
+  background:var(--folder-main);
+
+  font-weight:700;
+
+  margin-bottom:16px;
+}
+
+.category-title-text{
+  font-size:2.8rem;
+  font-weight:900;
+}
+
+/* ===================================================
+   POSTS
+=================================================== */
+
+.posts-list{
+  display:flex;
+  flex-direction:column;
+  gap:20px;
+}
+
+.post-card{
+  background:var(--surface);
+
+  border:1px solid var(--border);
+
+  border-radius:20px;
+
+  padding:24px;
+
+  cursor:pointer;
+
+  transition:.25s;
+
+  box-shadow:var(--shadow-sm);
+}
+
+.post-card:hover{
+  transform:translateY(-4px);
+  box-shadow:var(--shadow-md);
+}
+
+.post-meta{
+  display:flex;
+  gap:10px;
+
+  font-size:.85rem;
+
+  color:var(--muted);
+
+  margin-bottom:12px;
+}
+
+.post-card-title{
+  font-size:1.4rem;
+  font-weight:800;
+
+  margin-bottom:10px;
+}
+
+.post-card-summary{
+  color:var(--muted);
+  line-height:1.7;
+}
+
+/* ===================================================
+   POST DETAIL
+=================================================== */
+
+.post-detail-page{
+  max-width:900px;
+
+  margin:0 auto;
+
+  padding:80px 24px;
+}
+
+.post-detail-header{
+  margin-bottom:50px;
+}
+
+.post-detail-title{
+  font-size:clamp(2rem,5vw,3.5rem);
+  font-weight:900;
+
+  margin-top:14px;
+}
+
+.post-detail-meta{
+  display:flex;
+  gap:12px;
+
+  color:var(--muted);
+}
+
+.post-detail-tag{
+  font-weight:700;
+}
+
+.post-body{
+  line-height:1.9;
+}
+
+.post-body p{
+  margin-bottom:1.5rem;
+}
+
+.post-body h2{
+  margin:3rem 0 1rem;
+}
+
+.post-body h3{
+  margin:2rem 0 1rem;
+}
+
+/* ===================================================
+   STATUS
+=================================================== */
+
+.status-container{
+  min-height:60vh;
+
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+
+  text-align:center;
+}
+
+.status-title{
+  font-size:2rem;
+  font-weight:800;
+}
+
+.status-desc{
+  margin-top:12px;
+  color:var(--muted);
+}
+
+.status-retry-btn{
+  margin-top:24px;
+
+  border:none;
+
+  padding:.8rem 1.2rem;
+
+  border-radius:12px;
+
+  background:var(--folder-main);
+
+  cursor:pointer;
+}
+
+/* ===================================================
+   FOOTER
+=================================================== */
+
+.site-footer{
+  padding:40px;
+
+  text-align:center;
+
+  color:var(--muted);
+
+  border-top:1px solid var(--border);
+}
+
+/* ===================================================
+   MOBILE
+=================================================== */
+
+@media (max-width:768px){
+
+  .cover-title{
+    font-size:4.5rem;
+  }
+
+  .folder-grid{
+    grid-template-columns:1fr;
+  }
+
+  .category-title-text{
+    font-size:2rem;
+  }
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.site-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  padding:20px 40px;
+
+  border-bottom:1px solid var(--border);
+
+  background:var(--bg);
+}
+
+.site-header-left{
+  display:flex;
+  align-items:center;
+  gap:16px;
+}
+
+.site-logo{
+  font-size:1.4rem;
+  font-weight:800;
+}
+
+.header-actions{
+  display:flex;
+  gap:12px;
+}
+
+.back-btn,
+.theme-toggle-btn{
+  border:1px solid var(--border);
+
+  background:var(--surface);
+
+  color:var(--text);
+
+  padding:10px 16px;
+
+  border-radius:12px;
+
+  cursor:pointer;
+
+  font-weight:600;
+
+  transition:.2s;
+}
+
+.back-btn:hover,
+.theme-toggle-btn:hover{
+  transform:translateY(-2px);
+  box-shadow:var(--shadow-sm);
+}
