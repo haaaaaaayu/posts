@@ -1,13 +1,16 @@
 import { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import ReactMarkdown from 'react-markdown';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
+import PasswordModal from '../components/PasswordModal';
 
 export default function PostDetail() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [post, setPost] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -41,6 +44,20 @@ export default function PostDetail() {
       document.title = `ABOUT JINI | ${post.title}`;
     }
   }, [post]);
+
+  const handleDelete = async () => {
+    setDeleting(true);
+    const { error: deleteError } = await supabase
+      .from('posts')
+      .delete()
+      .eq('id', id);
+    setDeleting(false);
+    if (deleteError) {
+      alert('삭제 실패: ' + deleteError.message);
+      return;
+    }
+    navigate(-1);
+  };
 
   const formatDate = (dateString) => {
     if (!dateString) return '';
@@ -76,27 +93,47 @@ export default function PostDetail() {
 
   return (
     <article className="post-detail-page" id="post-detail-page-container">
+      {showDeleteModal && (
+        <PasswordModal
+          action="delete"
+          onConfirm={() => { setShowDeleteModal(false); handleDelete(); }}
+          onClose={() => setShowDeleteModal(false)}
+        />
+      )}
+
       <header className="post-detail-header">
         <div className="post-detail-meta">
-          <Link 
-            to={`/category/${post.tag}`} 
+          <Link
+            to={`/category/${post.tag}`}
             className="post-detail-tag"
             id="post-detail-tag-link"
           >
             {post.tag}
           </Link>
-          <span style={{ color: 'var(--border-light)' }}>|</span>
+          <span style={{ color: 'var(--muted)' }}>|</span>
           <span className="post-detail-date" id="post-detail-date">{formatDate(post.created_at)}</span>
         </div>
-        <h1 className="post-detail-title" id="post-detail-title-heading">
-          {post.title}
-        </h1>
+        <div className="post-detail-title-row">
+          <h1 className="post-detail-title" id="post-detail-title-heading">
+            {post.title}
+          </h1>
+          <button
+            className="post-delete-btn"
+            id="post-delete-btn"
+            onClick={() => setShowDeleteModal(true)}
+            disabled={deleting}
+          >
+            {deleting ? '삭제 중...' : '삭제'}
+          </button>
+        </div>
       </header>
 
       {/* Render Markdown content safely */}
-      <div className="post-body" id="post-content-body">
-        <ReactMarkdown>{post.content}</ReactMarkdown>
-      </div>
+      <div
+        className="post-body"
+        id="post-content-body"
+        dangerouslySetInnerHTML={{ __html: post.content }}
+      />
     </article>
   );
 }

@@ -1,22 +1,25 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+const CATEGORIES = [
+  { tag: 'basic',     label: 'Basic'     },
+  { tag: 'Values',    label: 'Values'    },
+  { tag: 'Favorites', label: 'Favorites' },
+  { tag: 'Projects',  label: 'Projects'  },
+  { tag: 'Running',   label: 'Running'   },
+  { tag: 'moments',   label: 'Moments'   },
+];
 
 export default function Cover() {
-  const [theme, setTheme] = useState(() => {
-    return localStorage.getItem('theme') || 'light';
-  });
+  const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'light');
+  const navigate = useNavigate();
 
   useEffect(() => {
-    if (theme === 'dark') {
-      document.body.classList.add('dark');
-    } else {
-      document.body.classList.remove('dark');
-    }
+    document.body.classList.toggle('dark', theme === 'dark');
     localStorage.setItem('theme', theme);
   }, [theme]);
 
-  const toggleTheme = () => {
-    setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
-  };
+  const toggleTheme = () => setTheme(prev => prev === 'light' ? 'dark' : 'light');
 
   return (
     <section className="cover-container" id="cover-section">
@@ -51,10 +54,43 @@ export default function Cover() {
         )}
       </button>
 
-      <h1 className="cover-title" id="cover-title">
-        <span className="cover-title-line">ABOUT</span>
-        <span className="cover-title-line">JINI</span>
-      </h1>
+      <div className="cover-center">
+        {/* iOS 텍스트 선택 영역 */}
+        <div className="cover-text-row">
+          {/* 왼쪽 핸들: 도트(위) + 라인(아래) */}
+          <div className="sel-handle sel-handle-left">
+            <div className="sel-handle-dot" />
+            <div className="sel-handle-line" />
+          </div>
+
+          <h1 className="cover-name-label">ABOUT JINI</h1>
+
+          {/* 오른쪽 핸들: 라인(위) + 도트(아래) */}
+          <div className="sel-handle sel-handle-right">
+            <div className="sel-handle-line" />
+            <div className="sel-handle-dot" />
+          </div>
+        </div>
+
+        {/* iOS 편집 메뉴 (callout / edit menu) */}
+        <div className="ios-callout">
+          <div className="ios-callout-tip" />
+          <div className="ios-callout-body">
+            {CATEGORIES.flatMap((cat, i) => [
+              i > 0 && <div key={`sep-${i}`} className="callout-sep" />,
+              <button
+                key={cat.tag}
+                className="callout-item"
+                onClick={() => navigate(`/category/${cat.tag}`)}
+              >
+                {cat.label}
+              </button>,
+            ]).filter(Boolean)}
+            <div className="callout-sep" />
+            <button className="callout-item callout-chevron">›</button>
+          </div>
+        </div>
+      </div>
     </section>
   );
 }

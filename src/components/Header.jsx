@@ -28,7 +28,7 @@ export default function Header() {
       <Link to="/" className="header-logo" id="header-logo-link">
         {/* Simple retro stamp-like favicon block */}
         <span style={{
-          border: '2px solid var(--text-dark)', 
+          border: '2px solid var(--text)',
           padding: '2px 6px',
           fontWeight: 900,
           marginRight: '2px'

@@ -35,10 +35,10 @@ export default function PostCard({ post }) {
     >
       <div className="post-meta">
         <span className="post-date" id={`post-date-${post.id}`}>{formatDate(post.created_at)}</span>
-        <span style={{ color: 'var(--border-light)' }}>|</span>
-        <span style={{ 
-          fontSize: '0.75rem', 
-          border: '1px solid var(--text-muted)', 
+        <span style={{ color: 'var(--muted)' }}>|</span>
+        <span style={{
+          fontSize: '0.75rem',
+          border: '1px solid var(--muted)',
           padding: '1px 5px',
           borderRadius: '3px',
           fontWeight: 800,
